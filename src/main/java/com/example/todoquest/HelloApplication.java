@@ -20,6 +20,7 @@ public class HelloApplication extends Application {
     private GerenciadorTarefas gerenciador;
 
     private VBox taskListArea;
+    private VBox taskinfo;
     private ComboBox<String> typeCombo;
     private TextField pointsField;
     private TextField bonusField;
@@ -105,7 +106,20 @@ public class HelloApplication extends Application {
                 wrapAttributeBar("Cultura", Color.ORANGE, culturaBar),
                 wrapAttributeBar("Sorte", Color.GREEN, sorteBar)
         );
-        root.setLeft(attributeBox);
+
+        taskinfo = new VBox(15);
+        taskinfo.setPadding(new Insets(20));
+        taskinfo.setAlignment(Pos.TOP_LEFT);
+
+        RefreshTaskInfo();
+
+        VBox leftBox = new VBox(20);
+        leftBox.setPadding(new Insets(0));
+        leftBox.setAlignment(Pos.TOP_LEFT);
+
+        leftBox.getChildren().addAll(attributeBox, taskinfo);
+
+        root.setLeft(leftBox);
 
         // Right: Profile image area
         root.setRight(createProfileBox());
@@ -238,9 +252,38 @@ public class HelloApplication extends Application {
         descField.clear();
 
         refreshTaskList();
+        RefreshTaskInfo();
+    }
+
+    private void RefreshTaskInfo(){
+        Label forcaInfo = new Label("Força: " + gerenciador.getTotalForcaTaskCompleted() + "/" + gerenciador.getTotalForcaTasks() + " tasks completed");
+        Label inteligenciaInfo = new Label("Inteligência: " + gerenciador.getTotalInteligenciaTaskCompleted() + "/" + gerenciador.getTotalInteligenciaTasks() + " tasks completed");
+        Label culturaInfo = new Label("Cultura: "  + gerenciador.getTotalCulturaTaskCompleted() + "/" + gerenciador.getTotalCulturaTasks() + " tasks completed");
+        Label sorteInfo = new Label("Sorte: " + gerenciador.getTotalSorteTaskCompleted() + "/" + gerenciador.getTotalSorteTasks() + " tasks completed");
+
+        forcaInfo.setTextFill(Color.WHITE);
+        forcaInfo.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        inteligenciaInfo.setTextFill(Color.WHITE);
+        inteligenciaInfo.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        culturaInfo.setTextFill(Color.WHITE);
+        culturaInfo.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        sorteInfo.setTextFill(Color.WHITE);
+        sorteInfo.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        taskinfo.getChildren().clear();
+        taskinfo.getChildren().addAll(
+                forcaInfo,
+                inteligenciaInfo,
+                culturaInfo,
+                sorteInfo
+        );
     }
 
     private void refreshTaskList() {
+
         taskListArea.getChildren().clear();
 
         addTasksOfType("Forca", gerenciador.getTarefasForca());
@@ -353,15 +396,21 @@ public class HelloApplication extends Application {
     private void completeTask(Tarefa t) {
         if (t instanceof TarefaForca) {
             usuario.setForca(usuario.getForca() + ((TarefaForca) t).getBonus());
+            gerenciador.completeForcaTask();
         } else if (t instanceof TarefaInteligencia) {
             usuario.setInteligencia(usuario.getInteligencia() + ((TarefaInteligencia) t).getBonus());
+            gerenciador.completeInteligenciaTask();
         } else if (t instanceof TarefaCultura) {
             usuario.setCultura(usuario.getCultura() + ((TarefaCultura) t).getBonus());
+            gerenciador.completeCulturaTask();
         } else if (t instanceof TarefaSorte) {
             usuario.setSorte(usuario.getSorte() + ((TarefaSorte) t).getBonus());
+            gerenciador.completeSorteTask();
+
         }
 
         updateAttributeBars();
+        RefreshTaskInfo();
     }
 
     private void updateAttributeBars() {
