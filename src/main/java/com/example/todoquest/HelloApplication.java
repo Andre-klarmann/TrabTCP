@@ -255,11 +255,15 @@ public class HelloApplication extends Application {
         RefreshTaskInfo();
     }
 
+    private Label createTaskInfoLabel(String taskType, int completedTasks, int totalTasks) {
+        return new Label(taskType + ": " + completedTasks + "/" + totalTasks + " tarefas completadas");
+    }
+
     private void RefreshTaskInfo(){
-        Label forcaInfo = new Label("Força: " + gerenciador.getTotalForcaTaskCompleted() + "/" + gerenciador.getTotalForcaTasks() + " tasks completed");
-        Label inteligenciaInfo = new Label("Inteligência: " + gerenciador.getTotalInteligenciaTaskCompleted() + "/" + gerenciador.getTotalInteligenciaTasks() + " tasks completed");
-        Label culturaInfo = new Label("Cultura: "  + gerenciador.getTotalCulturaTaskCompleted() + "/" + gerenciador.getTotalCulturaTasks() + " tasks completed");
-        Label sorteInfo = new Label("Sorte: " + gerenciador.getTotalSorteTaskCompleted() + "/" + gerenciador.getTotalSorteTasks() + " tasks completed");
+        Label forcaInfo = createTaskInfoLabel("Força", gerenciador.getTotalForcaTaskCompleted(), gerenciador.getTotalForcaTasks());
+        Label inteligenciaInfo = createTaskInfoLabel("Inteligência", gerenciador.getTotalInteligenciaTaskCompleted(), gerenciador.getTotalInteligenciaTasks());
+        Label culturaInfo = createTaskInfoLabel("Cultura", gerenciador.getTotalCulturaTaskCompleted(), gerenciador.getTotalCulturaTasks());
+        Label sorteInfo = createTaskInfoLabel("Sorte", gerenciador.getTotalSorteTaskCompleted(), gerenciador.getTotalSorteTasks());
 
         forcaInfo.setTextFill(Color.WHITE);
         forcaInfo.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
