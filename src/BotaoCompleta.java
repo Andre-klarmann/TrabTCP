@@ -16,12 +16,12 @@ public class BotaoCompleta {
         return isAcionado;
     }
 
-    // Setter para dataInicio
+    // Setter para isAcionado
     public void setIsAcionado(boolean booleano) {
         this.isAcionado = booleano;
     }
-    
-    public void completaTarefa(Calendario calendario) {
+
+    public void completaTarefa(Calendario calendario, GerenciadorDeTarefas gerenciadorDeTarefas) {
         if(isAcionado && calendario.estaNoPeriodo(LocalDate.now())) {
             /*
             * 
