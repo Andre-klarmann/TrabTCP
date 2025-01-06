@@ -29,8 +29,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build with Maven
-      run: mvn exec:java -Dexec.mainClass="com.example.todoquest.HelloApplication" -e
+    - name: Clean and compile project
+      run: mvn clean compile
+
+    - name: Run Application
+      run: mvn exec:java -Dexec.mainClass="com.example.todoquest.HelloApplication" -x
       
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
