@@ -5,7 +5,7 @@ public class TarefaCultura extends Tarefa{
 
     TarefaCultura(int pontos, String descricao, int bonus){
         super("Cultura", pontos, descricao);
-        this.bonusCultura = bonus;
+        this.bonusCultura = 0;
     }
 
     public int getBonus(){
