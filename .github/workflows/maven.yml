@@ -34,17 +34,6 @@ jobs:
 
     - name: Run tests
       run: mvn test
-
-    # Push to production branch after successful build and tests
-    - name: Push to production branch
-      if: success()
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git checkout -b production 
-        git add .  
-        git commit -m "Deploy changes to production"  
-        git push origin production 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
